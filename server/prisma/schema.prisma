@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+enum CategoryType {
+  INCOME
+  EXPENSE
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  passwordHash String
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  categories   Category[]
+  transactions Transaction[]
+  budgetMonths BudgetMonth[]
+}
+
+model Category {
+  id          String       @id @default(cuid())
+  name        String
+  type        CategoryType
+  isSeed      Boolean      @default(false)
+  userId      String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  budgetItems BudgetItem[]
+
+  @@unique([userId, name, type])
+  @@index([userId])
+}
+
+model Transaction {
+  id         String          @id @default(cuid())
+  amountMinor Int
+  type       TransactionType
+  date       DateTime
+  note       String?
+  userId     String
+  categoryId String
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+  user       User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category   Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  @@index([userId, date])
+  @@index([categoryId])
+}
+
+model BudgetMonth {
+  id                 String      @id @default(cuid())
+  userId             String
+  yearMonth          String
+  carryoverPoolMinor Int         @default(0)
+  closedAt           DateTime?
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  user               User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items              BudgetItem[]
+
+  @@unique([userId, yearMonth])
+  @@index([userId])
+}
+
+model BudgetItem {
+  id            String     @id @default(cuid())
+  budgetMonthId String
+  categoryId    String
+  plannedMinor  Int
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  budgetMonth   BudgetMonth @relation(fields: [budgetMonthId], references: [id], onDelete: Cascade)
+  category      Category    @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+
+  @@unique([budgetMonthId, categoryId])
+  @@index([categoryId])
+}
