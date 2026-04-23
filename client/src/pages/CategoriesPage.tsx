@@ -145,8 +145,8 @@ export function CategoriesPage() {
       </section>
 
       <section className="card-surface overflow-x-auto">
-        <table className="min-w-full text-sm">
-          <thead className="bg-brand-100 text-left text-brand-700">
+        <table className="data-table min-w-full text-sm">
+          <thead className="text-left text-brand-700">
             <tr>
               <th className="px-4 py-3">Name</th>
               <th className="px-4 py-3">Type</th>
@@ -156,7 +156,7 @@ export function CategoriesPage() {
           </thead>
           <tbody>
             {categories.map((category) => (
-              <tr key={category.id} className="border-t border-brand-100">
+              <tr key={category.id}>
                 <td className="px-4 py-3">{category.name}</td>
                 <td className="px-4 py-3">{category.type}</td>
                 <td className="px-4 py-3">{category.isSeed ? "Seed" : "Custom"}</td>
@@ -165,10 +165,7 @@ export function CategoriesPage() {
                     <button className="btn-secondary px-3 py-1 text-xs" onClick={() => onEdit(category.id)}>
                       Edit
                     </button>
-                    <button
-                      className="rounded-lg border border-red-200 px-3 py-1 text-xs font-semibold text-red-700 hover:bg-red-50"
-                      onClick={() => onDelete(category.id)}
-                    >
+                    <button className="danger-button rounded-lg px-3 py-1 text-xs font-semibold" onClick={() => onDelete(category.id)}>
                       Delete
                     </button>
                   </div>

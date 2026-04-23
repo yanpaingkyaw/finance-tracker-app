@@ -12,16 +12,16 @@ const navItems = [
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuth();
   return (
-    <div className="min-h-screen">
-      <header className="border-b border-brand-200/80 bg-white/90 backdrop-blur">
+    <div className="app-shell min-h-screen">
+      <header className="app-header border-b backdrop-blur">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-4">
           <div>
-            <p className="text-sm font-semibold text-brand-600">Mini Finance Tracker</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-brand-500">Mini Finance Tracker</p>
             <h1 className="font-display text-xl font-bold text-brand-900">Budget Health Dashboard</h1>
           </div>
           <div className="text-right">
             <p className="text-sm text-brand-600">{user?.email}</p>
-            <button className="text-sm font-semibold text-accent-700 hover:text-accent-800" onClick={logout}>
+            <button className="text-sm font-semibold text-brand-600 transition hover:text-brand-800" onClick={logout}>
               Logout
             </button>
           </div>
@@ -34,7 +34,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               end={item.to === "/"}
               className={({ isActive }) =>
                 `rounded-full px-3 py-1.5 text-sm font-semibold transition ${
-                  isActive ? "bg-brand-600 text-white" : "bg-brand-100 text-brand-700 hover:bg-brand-200"
+                  isActive
+                    ? "app-nav-chip-active text-white"
+                    : "app-nav-chip bg-brand-50/90 text-brand-700 hover:bg-brand-100"
                 }`
               }
             >

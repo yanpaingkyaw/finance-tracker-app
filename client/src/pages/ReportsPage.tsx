@@ -62,8 +62,8 @@ export function ReportsPage() {
         <>
           <section className="card-surface overflow-x-auto">
             <h2 className="px-4 pt-4 font-display text-lg font-bold text-brand-900">Monthly Summary</h2>
-            <table className="min-w-full text-sm">
-              <thead className="bg-brand-100 text-left text-brand-700">
+            <table className="data-table min-w-full text-sm">
+              <thead className="text-left text-brand-700">
                 <tr>
                   <th className="px-4 py-3">Month</th>
                   <th className="px-4 py-3">Income</th>
@@ -76,7 +76,7 @@ export function ReportsPage() {
               </thead>
               <tbody>
                 {report.months.map((month) => (
-                  <tr key={month.yearMonth} className="border-t border-brand-100">
+                  <tr key={month.yearMonth}>
                     <td className="px-4 py-3">{month.yearMonth}</td>
                     <td className="px-4 py-3">{formatMoney(month.incomeMinor)}</td>
                     <td className="px-4 py-3">{formatMoney(month.expenseMinor)}</td>
@@ -94,8 +94,8 @@ export function ReportsPage() {
 
           <section className="card-surface overflow-x-auto">
             <h2 className="px-4 pt-4 font-display text-lg font-bold text-brand-900">Category Totals</h2>
-            <table className="min-w-full text-sm">
-              <thead className="bg-brand-100 text-left text-brand-700">
+            <table className="data-table min-w-full text-sm">
+              <thead className="text-left text-brand-700">
                 <tr>
                   <th className="px-4 py-3">Category</th>
                   <th className="px-4 py-3">Planned</th>
@@ -107,7 +107,7 @@ export function ReportsPage() {
                 {report.categoryTotals.map((entry) => {
                   const variance = entry.plannedMinor - entry.spentMinor;
                   return (
-                    <tr key={entry.categoryId} className="border-t border-brand-100">
+                    <tr key={entry.categoryId}>
                       <td className="px-4 py-3">{entry.categoryName}</td>
                       <td className="px-4 py-3">{formatMoney(entry.plannedMinor)}</td>
                       <td className="px-4 py-3">{formatMoney(entry.spentMinor)}</td>

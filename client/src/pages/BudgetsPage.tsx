@@ -141,8 +141,8 @@ export function BudgetsPage() {
       </section>
 
       <section className="card-surface overflow-x-auto">
-        <table className="min-w-full text-sm">
-          <thead className="bg-brand-100 text-left text-brand-700">
+        <table className="data-table min-w-full text-sm">
+          <thead className="text-left text-brand-700">
             <tr>
               <th className="px-4 py-3">Category</th>
               <th className="px-4 py-3">Planned (MMK)</th>
@@ -155,7 +155,7 @@ export function BudgetsPage() {
               const remaining = Number(draft[item.categoryId] || 0) - item.spentMinor;
               const over = remaining < 0;
               return (
-                <tr key={item.categoryId} className="border-t border-brand-100">
+                <tr key={item.categoryId}>
                   <td className="px-4 py-3">{item.categoryName}</td>
                   <td className="px-4 py-3">
                     <input

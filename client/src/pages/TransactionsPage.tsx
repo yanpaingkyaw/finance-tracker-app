@@ -223,8 +223,8 @@ export function TransactionsPage() {
       </section>
 
       <section className="card-surface overflow-x-auto">
-        <table className="min-w-full text-sm">
-          <thead className="bg-brand-100 text-left text-brand-700">
+        <table className="data-table min-w-full text-sm">
+          <thead className="text-left text-brand-700">
             <tr>
               <th className="px-4 py-3">Date</th>
               <th className="px-4 py-3">Category</th>
@@ -236,7 +236,7 @@ export function TransactionsPage() {
           </thead>
           <tbody>
             {transactions.map((tx) => (
-              <tr key={tx.id} className="border-t border-brand-100">
+              <tr key={tx.id}>
                 <td className="px-4 py-3">{fromIsoDate(tx.date)}</td>
                 <td className="px-4 py-3">{categoryMap.get(tx.categoryId)?.name ?? tx.categoryName}</td>
                 <td className="px-4 py-3">{tx.type}</td>
@@ -249,10 +249,7 @@ export function TransactionsPage() {
                     <button className="btn-secondary px-3 py-1 text-xs" onClick={() => startEdit(tx.id)}>
                       Edit
                     </button>
-                    <button
-                      className="rounded-lg border border-red-200 px-3 py-1 text-xs font-semibold text-red-700 hover:bg-red-50"
-                      onClick={() => handleDelete(tx.id)}
-                    >
+                    <button className="danger-button rounded-lg px-3 py-1 text-xs font-semibold" onClick={() => handleDelete(tx.id)}>
                       Delete
                     </button>
                   </div>

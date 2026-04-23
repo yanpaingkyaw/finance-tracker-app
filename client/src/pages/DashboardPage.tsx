@@ -110,8 +110,8 @@ export function DashboardPage() {
       </section>
 
       <section className="card-surface overflow-x-auto">
-        <table className="min-w-full text-sm">
-          <thead className="bg-brand-100 text-left text-brand-700">
+        <table className="data-table min-w-full text-sm">
+          <thead className="text-left">
             <tr>
               <th className="px-4 py-3">Category</th>
               <th className="px-4 py-3">Planned</th>
@@ -126,7 +126,7 @@ export function DashboardPage() {
               const percent = Math.round(ratio * 100);
               const over = item.remainingMinor < 0;
               return (
-                <tr key={item.categoryId} className="border-t border-brand-100">
+                <tr key={item.categoryId}>
                   <td className="px-4 py-3">{item.categoryName}</td>
                   <td className="px-4 py-3">{formatMoney(item.plannedMinor)}</td>
                   <td className="px-4 py-3">{formatMoney(item.spentMinor)}</td>
@@ -134,7 +134,7 @@ export function DashboardPage() {
                     {formatMoney(item.remainingMinor)}
                   </td>
                   <td className="px-4 py-3">
-                    <div className="h-2 w-full rounded-full bg-brand-100">
+                    <div className="h-2 w-full rounded-full bg-brand-100/70">
                       <div
                         className={`h-2 rounded-full ${over ? "bg-red-500" : "bg-brand-500"}`}
                         style={{ width: `${Math.min(percent, 100)}%` }}
