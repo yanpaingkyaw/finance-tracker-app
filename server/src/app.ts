@@ -38,6 +38,9 @@ app.use(morgan("dev"));
 app.get("/health", (_req, res) => {
   res.json({ ok: true });
 });
+app.get("/api/health", (_req, res) => {
+  res.json({ ok: true });
+});
 
 app.use("/auth", authRoutes);
 app.use("/categories", categoryRoutes);
@@ -53,3 +56,5 @@ app.use("/api/budgets", budgetRoutes);
 app.use("/api/reports", reportRoutes);
 
 app.use(errorHandler);
+
+export default app;

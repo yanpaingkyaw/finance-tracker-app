@@ -1,4 +1,10 @@
-process.env.DATABASE_URL = "file:./test.db";
+const testDatabaseUrl = process.env.TEST_DATABASE_URL;
+if (!testDatabaseUrl) {
+  throw new Error("TEST_DATABASE_URL is required for backend tests.");
+}
+
+process.env.DATABASE_URL = testDatabaseUrl;
+process.env.DIRECT_URL = process.env.DIRECT_URL ?? testDatabaseUrl;
 process.env.JWT_SECRET = "test-secret";
 process.env.CORS_ORIGIN = "http://localhost:5173";
 process.env.PORT = "4010";

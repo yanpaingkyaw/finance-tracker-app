@@ -10,7 +10,7 @@ A localhost-first full-stack app for:
 
 - Frontend: React + Vite + TypeScript + Tailwind CSS
 - Backend: Node.js + Express + TypeScript
-- Database: SQLite (Prisma ORM)
+- Database: Neon Postgres (Prisma ORM)
 - Shared contracts: workspace package `@mini-finance/shared`
 - Tests: Vitest (frontend + backend), Supertest (backend integration)
 
@@ -58,23 +58,45 @@ A localhost-first full-stack app for:
   ```bash
   npm run build
   ```
+- Deploy migrations:
+  ```bash
+  npm run prisma:migrate:deploy
+  ```
+
+Backend tests require a disposable Postgres database:
+
+```bash
+$env:TEST_DATABASE_URL="postgresql://USER:PASSWORD@HOST.neon.tech/DB?sslmode=require"
+npm run test -w server
+```
+
+## Vercel
+
+- Project root: repository root
+- Build command: `npm run build`
+- Output directory: `client/dist`
+- API routes: `/api/*` through `api/[...path].ts`
+- Required env vars: `DATABASE_URL`, `DIRECT_URL`, `JWT_SECRET`, `CORS_ORIGIN`
+- Optional env var: `VITE_API_URL` only when frontend and API are split
 
 ## API Endpoints
 
+- Health:
+  - `GET /api/health`
 - Auth:
-  - `POST /auth/register`
-  - `POST /auth/login`
-  - `GET /auth/me`
+  - `POST /api/auth/register`
+  - `POST /api/auth/login`
+  - `GET /api/auth/me`
 - Categories:
-  - `GET/POST/PATCH/DELETE /categories`
+  - `GET/POST/PATCH/DELETE /api/categories`
 - Transactions:
-  - `GET/POST/PATCH/DELETE /transactions`
+  - `GET/POST/PATCH/DELETE /api/transactions`
 - Budgets:
-  - `GET /budgets/:yearMonth`
-  - `PUT /budgets/:yearMonth/items`
-  - `POST /budgets/:yearMonth/close`
+  - `GET /api/budgets/:yearMonth`
+  - `PUT /api/budgets/:yearMonth/items`
+  - `POST /api/budgets/:yearMonth/close`
 - Reports:
-  - `GET /reports/monthly?from=YYYY-MM&to=YYYY-MM`
+  - `GET /api/reports/monthly?from=YYYY-MM&to=YYYY-MM`
 
 ## Notes
 

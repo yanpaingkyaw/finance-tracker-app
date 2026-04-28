@@ -3,10 +3,10 @@
 ## Architecture
 
 ### 1. System Overview
-- Goal: localhost-first finance tracker with multi-user auth, budgeting, and monthly reports.
+- Goal: Vercel-ready finance tracker with multi-user auth, budgeting, and monthly reports.
 - Frontend: React + Vite + TypeScript + Tailwind CSS (`client`).
 - Backend: Node.js + Express + TypeScript (`server`).
-- Database: SQLite via Prisma ORM.
+- Database: Neon Postgres via Prisma ORM.
 - Shared contracts: shared DTO/types package (`shared`) used by client and server.
 
 ### 2. High-Level Architecture
@@ -16,11 +16,12 @@
   - API service layer for HTTP communication.
 - API layer
   - Express routes for auth, categories, transactions, budgets, reports.
+  - Vercel Node Function adapter at `api/[...path].ts` for `/api/*`.
   - Middleware for JWT auth, validation, and unified error responses.
 - Domain layer
   - Budget service for month creation, carryover pool, overspend offset logic, and reporting.
 - Persistence layer
-  - Prisma Client + SQLite.
+  - Prisma Client + Neon Postgres.
   - User-scoped records for strict data isolation.
 
 ### 3. Workspace Structure
