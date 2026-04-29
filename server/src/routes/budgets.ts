@@ -24,8 +24,6 @@ const budgetItemSchema = z.object({
   plannedMinor: z.number().int().min(0),
 });
 
-type BudgetItemInput = z.infer<typeof budgetItemSchema>;
-
 const updateItemsSchema = z.object({
   params: z.object({
     yearMonth: z.string(),
@@ -57,15 +55,19 @@ router.put(
   "/:yearMonth/items",
   validateRequest(updateItemsSchema),
   asyncHandler(async (req, res) => {
-    const parsedParams = updateItemsSchema.shape.params.parse(req.params);
+    const { yearMonth } = updateItemsSchema.shape.params.parse(req.params);
     const parsedBody = updateItemsSchema.shape.body.parse(req.body);
 
-    const items: BudgetItemInput[] = parsedBody.items;
+    const items: Array<{ categoryId: string; plannedMinor: number }> =
+      parsedBody.items.map((item) => ({
+        categoryId: item.categoryId as string,
+        plannedMinor: item.plannedMinor as number,
+      }));
 
     const budget = await replaceBudgetItems(
       prisma,
       req.user!.id,
-      assertYearMonth(parsedParams.yearMonth),
+      assertYearMonth(yearMonth),
       items,
     );
 
