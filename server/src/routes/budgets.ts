@@ -42,6 +42,7 @@ router.get(
   validateRequest(paramsSchema),
   asyncHandler(async (req, res) => {
     const { yearMonth } = paramsSchema.shape.params.parse(req.params);
+
     const budget = await getBudgetMonthView(
       prisma,
       req.user!.id,
@@ -56,15 +57,15 @@ router.put(
   "/:yearMonth/items",
   validateRequest(updateItemsSchema),
   asyncHandler(async (req, res) => {
-    const { yearMonth } = updateItemsSchema.shape.params.parse(req.params);
-    const { items } = updateItemsSchema.shape.body.parse(req.body) as {
-      items: BudgetItemInput[];
-    };
+    const parsedParams = updateItemsSchema.shape.params.parse(req.params);
+    const parsedBody = updateItemsSchema.shape.body.parse(req.body);
+
+    const items: BudgetItemInput[] = parsedBody.items;
 
     const budget = await replaceBudgetItems(
       prisma,
       req.user!.id,
-      assertYearMonth(yearMonth),
+      assertYearMonth(parsedParams.yearMonth),
       items,
     );
 
@@ -77,6 +78,7 @@ router.post(
   validateRequest(paramsSchema),
   asyncHandler(async (req, res) => {
     const { yearMonth } = paramsSchema.shape.params.parse(req.params);
+
     const result = await closeBudgetMonth(
       prisma,
       req.user!.id,
