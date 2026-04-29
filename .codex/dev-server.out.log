@@ -1,0 +1,105 @@
+
+> mini-finance-tracker@1.0.0 dev
+> concurrently --kill-others-on-fail "npm run dev -w server" "npm run dev -w client"
+
+[0] 
+[0] > @mini-finance/server@1.0.0 dev
+[0] > tsx watch src/index.ts
+[0] 
+[1] 
+[1] > @mini-finance/client@1.0.0 dev
+[1] > vite
+[1] 
+[1] 
+[1]   [32m[1mVITE[22m v6.4.2[39m  [2mready in [0m[1m987[22m[2m[0m ms[22m
+[1] 
+[1]   [32m➜[39m  [1mLocal[22m:   [36mhttp://localhost:[1m5173[22m/[39m
+[1] [2m  [32m➜[39m  [1mNetwork[22m[2m: use [22m[1m--host[22m[2m to expose[22m
+[0] Server listening on http://localhost:4100
+[0] [0mPOST /auth/register [32m201[0m 8466.258 ms - 342[0m
+[0] [0mGET /auth/me [32m200[0m 602.950 ms - 131[0m
+[0] [0mGET /reports/monthly?from=2026-04&to=2026-04 [33m400[0m 1439.297 ms - 370[0m
+[0] [0mGET /budgets/2026-04 [32m200[0m 2395.904 ms - 1219[0m
+[0] [0mGET /reports/monthly?from=2026-04&to=2026-04 [32m200[0m 1840.854 ms - 981[0m
+[0] [0mGET /budgets/2026-04 [36m304[0m 1681.402 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-04 [32m200[0m 335.361 ms - 19[0m
+[0] [0mGET /categories [32m200[0m 493.455 ms - 2198[0m
+[0] [0mGET /transactions?yearMonth=2026-04 [36m304[0m 347.588 ms - -[0m
+[0] [0mGET /categories [36m304[0m 352.772 ms - -[0m
+[0] [0mPOST /transactions [32m201[0m 1019.078 ms - 248[0m
+[0] [0mGET /categories [36m304[0m 336.743 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-04 [32m200[0m 493.628 ms - 251[0m
+[0] [0mGET /auth/me [36m304[0m 316.709 ms - -[0m
+[0] [0mGET /auth/me [36m304[0m 305.653 ms - -[0m
+[0] [0mGET /categories [36m304[0m 402.800 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-04 [36m304[0m 426.574 ms - -[0m
+[0] [0mGET /categories [36m304[0m 397.274 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-04 [36m304[0m 436.543 ms - -[0m
+[0] [0mGET /api/health [32m200[0m 0.297 ms - 11[0m
+[0] [0mPOST /auth/login [33m401[0m 379.125 ms - 72[0m
+[0] [0mPOST /auth/register [32m201[0m 7088.938 ms - 304[0m
+[0] [0mGET /auth/me [32m200[0m 296.989 ms - 115[0m
+[0] [0mGET /reports/monthly?from=2026-04&to=2026-04 [33m400[0m 1198.226 ms - 370[0m
+[0] [0mGET /budgets/2026-04 [32m200[0m 2187.556 ms - 1219[0m
+[0] [0mGET /reports/monthly?from=2026-04&to=2026-04 [32m200[0m 1478.422 ms - 981[0m
+[0] [0mGET /budgets/2026-04 [36m304[0m 1654.249 ms - -[0m
+[0] [0mPOST /auth/login [32m200[0m 480.372 ms - 304[0m
+[0] [0mGET /auth/me [36m304[0m 247.231 ms - -[0m
+[0] [0mGET /reports/monthly?from=2026-04&to=2026-04 [36m304[0m 1402.147 ms - -[0m
+[0] [0mGET /budgets/2026-04 [36m304[0m 1601.889 ms - -[0m
+[0] [0mGET /reports/monthly?from=2026-04&to=2026-04 [36m304[0m 1519.660 ms - -[0m
+[0] [0mGET /budgets/2026-04 [36m304[0m 1594.632 ms - -[0m
+[0] [0mGET /budgets/2026-04 [36m304[0m 1640.811 ms - -[0m
+[0] [0mGET /budgets/2026-04 [36m304[0m 1244.755 ms - -[0m
+[0] [0mPUT /budgets/2026-04/items [32m200[0m 2238.426 ms - 1263[0m
+[0] [0mGET /budgets/2026-04 [32m200[0m 1261.413 ms - 1263[0m
+[0] [0mGET /reports/monthly?from=2026-04&to=2026-04 [32m200[0m 1528.020 ms - 1003[0m
+[0] [0mGET /budgets/2026-04 [36m304[0m 1177.437 ms - -[0m
+[0] [0mGET /reports/monthly?from=2026-04&to=2026-04 [36m304[0m 1512.629 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-04 [32m200[0m 231.214 ms - 19[0m
+[0] [0mGET /categories [32m200[0m 256.898 ms - 2198[0m
+[0] [0mGET /transactions?yearMonth=2026-04 [36m304[0m 227.064 ms - -[0m
+[0] [0mGET /categories [36m304[0m 246.137 ms - -[0m
+[0] [0mPOST /transactions [32m201[0m 742.647 ms - 237[0m
+[0] [0mGET /categories [36m304[0m 321.943 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-04 [32m200[0m 347.800 ms - 240[0m
+[0] [0mPOST /transactions [32m201[0m 835.169 ms - 258[0m
+[0] [0mGET /categories [36m304[0m 256.921 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-04 [36m304[0m 380.122 ms - -[0m
+[0] [0mGET /categories [36m304[0m 237.444 ms - -[0m
+[0] [0mGET /categories [36m304[0m 233.187 ms - -[0m
+[0] [0mGET /categories [36m304[0m 231.784 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-04 [36m304[0m 343.432 ms - -[0m
+[0] [0mGET /categories [36m304[0m 231.120 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-04 [36m304[0m 351.037 ms - -[0m
+[0] [0mPOST /transactions [32m201[0m 738.178 ms - 237[0m
+[0] [0mGET /categories [36m304[0m 248.253 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-04 [36m304[0m 363.901 ms - -[0m
+[0] [0mDELETE /transactions/cmoih7wja001tq5g4grms2tq0 [32m204[0m 462.571 ms - -[0m
+[0] [0mGET /categories [36m304[0m 228.153 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-04 [32m200[0m 254.559 ms - 19[0m
+[0] [0mPOST /transactions [32m201[0m 801.060 ms - 240[0m
+[0] [0mGET /categories [36m304[0m 252.108 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-04 [36m304[0m 278.435 ms - -[0m
+[0] [0mGET /categories [36m304[0m 297.944 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-03 [32m200[0m 322.791 ms - 708[0m
+[0] [0mDELETE /transactions/cmoih98jc001xq5g48q14gxd5 [32m204[0m 512.118 ms - -[0m
+[0] [0mGET /categories [36m304[0m 232.007 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-03 [32m200[0m 428.903 ms - 486[0m
+[0] [0mDELETE /transactions/cmoih9o3q001zq5g4l2t7mjqt [32m204[0m 507.007 ms - -[0m
+[0] [0mGET /categories [36m304[0m 230.185 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-03 [32m200[0m 342.955 ms - 261[0m
+[0] [0mPOST /transactions [32m201[0m 744.461 ms - 237[0m
+[0] [0mGET /categories [36m304[0m 249.312 ms - -[0m
+[0] [0mGET /transactions?yearMonth=2026-03 [36m304[0m 367.144 ms - -[0m
+[0] [0mGET /budgets/2026-04 [32m200[0m 1310.950 ms - 1269[0m
+[0] [0mGET /reports/monthly?from=2026-04&to=2026-04 [32m200[0m 1611.438 ms - 1016[0m
+[0] [0mGET /budgets/2026-04 [36m304[0m 1235.159 ms - -[0m
+[0] [0mGET /reports/monthly?from=2026-04&to=2026-04 [36m304[0m 1570.376 ms - -[0m
+[0] [0mGET /budgets/2026-04 [36m304[0m 1789.833 ms - -[0m
+[0] [0mGET /budgets/2026-04 [36m304[0m 1433.755 ms - -[0m
+[0] [0mGET /reports/monthly?from=2026-04&to=2026-04 [36m304[0m 1539.624 ms - -[0m
+[0] [0mGET /budgets/2026-04 [36m304[0m 1248.513 ms - -[0m
+[0] [0mGET /reports/monthly?from=2026-04&to=2026-04 [36m304[0m 1845.260 ms - -[0m
+[0] [0mGET /budgets/2026-04 [36m304[0m 1228.905 ms - -[0m
+[0] [0mGET /reports/monthly?from=2026-04&to=2026-04 [36m304[0m 1352.801 ms - -[0m
