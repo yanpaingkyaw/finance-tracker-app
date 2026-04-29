@@ -19,17 +19,19 @@ const paramsSchema = z.object({
   }),
 });
 
+const budgetItemSchema = z.object({
+  categoryId: z.string().min(1),
+  plannedMinor: z.number().int().min(0),
+});
+
+type BudgetItemInput = z.infer<typeof budgetItemSchema>;
+
 const updateItemsSchema = z.object({
   params: z.object({
     yearMonth: z.string(),
   }),
   body: z.object({
-    items: z.array(
-      z.object({
-        categoryId: z.string().min(1),
-        plannedMinor: z.number().int().min(0),
-      }),
-    ),
+    items: z.array(budgetItemSchema),
   }),
 });
 
@@ -40,7 +42,12 @@ router.get(
   validateRequest(paramsSchema),
   asyncHandler(async (req, res) => {
     const { yearMonth } = paramsSchema.shape.params.parse(req.params);
-    const budget = await getBudgetMonthView(prisma, req.user!.id, assertYearMonth(yearMonth));
+    const budget = await getBudgetMonthView(
+      prisma,
+      req.user!.id,
+      assertYearMonth(yearMonth),
+    );
+
     res.json({ budget });
   }),
 );
@@ -50,8 +57,17 @@ router.put(
   validateRequest(updateItemsSchema),
   asyncHandler(async (req, res) => {
     const { yearMonth } = updateItemsSchema.shape.params.parse(req.params);
-    const { items } = updateItemsSchema.shape.body.parse(req.body);
-    const budget = await replaceBudgetItems(prisma, req.user!.id, assertYearMonth(yearMonth), items);
+    const { items } = updateItemsSchema.shape.body.parse(req.body) as {
+      items: BudgetItemInput[];
+    };
+
+    const budget = await replaceBudgetItems(
+      prisma,
+      req.user!.id,
+      assertYearMonth(yearMonth),
+      items,
+    );
+
     res.json({ budget });
   }),
 );
@@ -61,7 +77,12 @@ router.post(
   validateRequest(paramsSchema),
   asyncHandler(async (req, res) => {
     const { yearMonth } = paramsSchema.shape.params.parse(req.params);
-    const result = await closeBudgetMonth(prisma, req.user!.id, assertYearMonth(yearMonth));
+    const result = await closeBudgetMonth(
+      prisma,
+      req.user!.id,
+      assertYearMonth(yearMonth),
+    );
+
     res.json(result);
   }),
 );
