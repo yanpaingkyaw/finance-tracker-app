@@ -13,3 +13,4 @@ server/node_modules
 shared/node_modules
 server/prisma/dev.db
 server/prisma/test.db
+client/dist
