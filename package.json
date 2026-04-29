@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "dev": "concurrently --kill-others-on-fail \"npm run dev -w server\" \"npm run dev -w client\"",
-    "build": "npm run build -w shared && npm run build -w server && npm run build -w client",
-    "vercel-build": "npm run build -w shared && npm run build -w server && npm run build -w client",
+    "build": "npm run build -w shared && npm run prisma:generate -w server && npm run build -w server && npm run build -w client",
+    "vercel-build": "npm run build",
     "build:workspaces": "npm run build",
     "test": "npm run test -w server && npm run test -w client",
     "prisma:generate": "npm run prisma:generate -w server",
