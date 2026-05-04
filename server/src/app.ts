@@ -13,9 +13,11 @@ export const app = express();
 
 const configuredCorsOrigins = config.corsOrigin
   .split(",")
-  .map((entry) => entry.trim())
+  .map((entry) => entry.trim().replace(/\/$/, ""))
   .filter(Boolean);
+
 const localOriginPattern = /^https?:\/\/(localhost|127\.0\.0\.1):\d+$/;
+const vercelOriginPattern = /^https:\/\/.*\.vercel\.app$/;
 
 app.use(
   cors({
@@ -24,20 +26,30 @@ app.use(
         callback(null, true);
         return;
       }
-      if (localOriginPattern.test(origin) || configuredCorsOrigins.includes(origin)) {
+
+      const normalizedOrigin = origin.trim().replace(/\/$/, "");
+
+      if (
+        localOriginPattern.test(normalizedOrigin) ||
+        vercelOriginPattern.test(normalizedOrigin) ||
+        configuredCorsOrigins.includes(normalizedOrigin)
+      ) {
         callback(null, true);
         return;
       }
-      callback(new Error("CORS origin not allowed"));
+
+      callback(new Error(`CORS origin not allowed: ${normalizedOrigin}`));
     },
   }),
 );
+
 app.use(express.json());
 app.use(morgan("dev"));
 
 app.get("/health", (_req, res) => {
   res.json({ ok: true });
 });
+
 app.get("/api/health", (_req, res) => {
   res.json({ ok: true });
 });
