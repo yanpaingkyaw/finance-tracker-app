@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it, vi } from "vitest";
 import { DashboardPage } from "./DashboardPage";
 
@@ -9,9 +10,10 @@ vi.mock("../hooks/useAuth", () => ({
 vi.mock("../api/services", () => ({
   getBudget: vi.fn(),
   getMonthlyReport: vi.fn(),
+  getTransactions: vi.fn(),
 }));
 
-import { getBudget, getMonthlyReport } from "../api/services";
+import { getBudget, getMonthlyReport, getTransactions } from "../api/services";
 import { useAuth } from "../hooks/useAuth";
 
 describe("DashboardPage", () => {
@@ -58,8 +60,15 @@ describe("DashboardPage", () => {
         categoryTotals: [],
       },
     });
+    vi.mocked(getTransactions).mockResolvedValue({
+      transactions: [],
+    });
 
-    render(<DashboardPage />);
+    render(
+      <MemoryRouter>
+        <DashboardPage />
+      </MemoryRouter>,
+    );
 
     await waitFor(() =>
       expect(screen.getByText("Overspending detected, but carryover pool covered it this month.")).toBeInTheDocument(),
