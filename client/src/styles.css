@@ -315,13 +315,13 @@ body {
 
 .auth-submit {
   min-height: 3.5rem;
-  background-image: linear-gradient(135deg, #3f7053 0%, #4f8b68 55%, #5a9871 100%);
-  box-shadow: 0 18px 34px rgba(63, 112, 83, 0.24);
+  background-image: linear-gradient(135deg, #2f2fe4 0%, #162e93 55%, #1a1953 100%);
+  box-shadow: 0 18px 34px rgba(22, 46, 147, 0.24);
 }
 
 .auth-submit:hover {
   transform: translateY(-1px);
-  box-shadow: 0 22px 40px rgba(63, 112, 83, 0.28);
+  box-shadow: 0 22px 40px rgba(22, 46, 147, 0.28);
 }
 
 @keyframes authFloat {
