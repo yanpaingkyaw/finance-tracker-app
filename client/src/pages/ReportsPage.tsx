@@ -1,6 +1,7 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import { ApiError } from "../api/client";
 import { getMonthlyReport } from "../api/services";
+import { BudgetVsActualChart } from "../components/BudgetVsActualChart";
 import { ErrorNotice } from "../components/ErrorNotice";
 import { LoadingState } from "../components/LoadingState";
 import { useAuth } from "../hooks/useAuth";
@@ -13,6 +14,26 @@ export function ReportsPage() {
   const [report, setReport] = useState<Awaited<ReturnType<typeof getMonthlyReport>>["report"] | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const monthlyChartItems = useMemo(
+    () =>
+      report?.months.map((month) => ({
+        label: month.yearMonth,
+        budgetMinor: month.totalPlannedMinor,
+        actualMinor: month.totalSpentMinor,
+      })) ?? [],
+    [report],
+  );
+
+  const categoryChartItems = useMemo(
+    () =>
+      report?.categoryTotals.map((entry) => ({
+        label: entry.categoryName,
+        budgetMinor: entry.plannedMinor,
+        actualMinor: entry.spentMinor,
+      })) ?? [],
+    [report],
+  );
 
   async function handleRun(event: FormEvent) {
     event.preventDefault();
@@ -60,6 +81,18 @@ export function ReportsPage() {
 
       {report ? (
         <>
+          <BudgetVsActualChart
+            title="Budget vs Actual"
+            subtitle="Planned budget compared with actual transaction spend by month"
+            items={monthlyChartItems}
+          />
+
+          <BudgetVsActualChart
+            title="Category Budget vs Actual"
+            subtitle="Planned budget compared with actual spend by category"
+            items={categoryChartItems}
+          />
+
           <section className="card-surface overflow-x-auto">
             <h2 className="px-4 pt-4 font-display text-lg font-bold text-brand-900">Monthly Summary</h2>
             <table className="data-table min-w-full text-sm">
