@@ -62,6 +62,7 @@ describe("DashboardPage", () => {
     });
     vi.mocked(getTransactions).mockResolvedValue({
       transactions: [],
+      pagination: { page: 1, pageSize: 3, total: 0, totalPages: 0 },
     });
 
     render(

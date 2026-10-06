@@ -83,3 +83,10 @@
 - Password hashing with bcrypt.
 - Every protected query is scoped by `userId`.
 - Validation with Zod and normalized error response format.
+
+### 8. Version 1.2 Transaction Listing
+- The transaction page keeps its current-month default and filters by month, type, category, and a case-insensitive partial match on trimmed notes. Filters run in Postgres, scoped to the authenticated user.
+- `GET /transactions` accepts optional `yearMonth`, `type`, `categoryId`, and `note`, plus `page` (default `1`) and `pageSize` (default `20`, maximum `100`). Invalid query values receive a validation error. Omitting `yearMonth` includes all months.
+- The response is `{ transactions, pagination: { page, pageSize, total, totalPages } }`. Results are ordered by descending date, creation time, and ID for stable page boundaries. Pages beyond the result set return an empty `transactions` array.
+- The UI shows 20 rows per page with numbered navigation and resets to page 1 when filters change. The dashboard requests the first three rows of its selected month.
+- Transaction API requests remain network-only under the existing service worker rules. The existing transaction indexes and schema are retained; no migration is required.
