@@ -59,10 +59,27 @@ export async function deleteCategory(token: string, id: string) {
   });
 }
 
-export async function getTransactions(token: string, yearMonth?: string) {
-  const query = yearMonth ? `?yearMonth=${yearMonth}` : "";
+export interface TransactionListOptions {
+  yearMonth?: string;
+  type?: CategoryType;
+  categoryId?: string;
+  note?: string;
+  page?: number;
+  pageSize?: number;
+}
+
+export async function getTransactions(token: string, options: TransactionListOptions = {}, signal?: AbortSignal) {
+  const params = new URLSearchParams();
+  if (options.yearMonth) params.set("yearMonth", options.yearMonth);
+  if (options.type) params.set("type", options.type);
+  if (options.categoryId) params.set("categoryId", options.categoryId);
+  if (options.note) params.set("note", options.note);
+  if (options.page !== undefined) params.set("page", String(options.page));
+  if (options.pageSize !== undefined) params.set("pageSize", String(options.pageSize));
+  const query = params.size ? `?${params.toString()}` : "";
   return apiRequest<TransactionsResponse>(`/transactions${query}`, {
     token,
+    ...(signal ? { signal } : {}),
   });
 }
 

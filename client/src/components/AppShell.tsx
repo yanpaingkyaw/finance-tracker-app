@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { AppVersion } from "./AppVersion";
 
 const navItems = [
   { to: "/", label: "Dashboard", shortLabel: "Home", icon: "home" },
@@ -64,7 +65,7 @@ function MobileNavIcon({ name }: { name: string }) {
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuth();
   return (
-    <div className="app-shell min-h-screen">
+    <div className="app-shell flex min-h-screen flex-col">
       <header className="app-header border-b backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-4">
           <div>
@@ -99,7 +100,10 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           ))}
         </nav>
       </header>
-      <main className="mx-auto max-w-6xl px-4 pb-28 pt-5 sm:py-6">{children}</main>
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-6 pt-5 sm:py-6">{children}</main>
+      <footer className="px-4 pb-28 pt-2 sm:pb-6">
+        <AppVersion />
+      </footer>
       <nav className="mobile-bottom-nav sm:hidden" aria-label="Mobile navigation">
         {navItems.map((item) => (
           <NavLink

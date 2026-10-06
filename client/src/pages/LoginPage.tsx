@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ApiError } from "../api/client";
 import { ErrorNotice } from "../components/ErrorNotice";
+import { AppVersion } from "../components/AppVersion";
 import { useAuth } from "../hooks/useAuth";
 
 const benefitItems = [
@@ -237,6 +238,9 @@ export function LoginPage() {
           </div>
         </section>
       </div>
+      <footer className="relative mx-auto max-w-6xl pt-6">
+        <AppVersion />
+      </footer>
     </div>
   );
 }

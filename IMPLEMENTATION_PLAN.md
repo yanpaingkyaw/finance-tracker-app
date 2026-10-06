@@ -65,3 +65,12 @@
 - Plan has been implemented end-to-end in the current workspace.
 - Tests and builds are passing.
 - This file is the implementation roadmap baseline for v1 evolution.
+
+### 6. Version 1.2: Transaction List Performance
+- Objective: bound transaction list requests and make the month, type, category, and note filters work across all matching records.
+- Backend: validate list query parameters; apply user-scoped filters in Prisma; count matches; fetch only the requested page with deterministic descending order; return pagination metadata.
+- Frontend: update the typed API client, show 20 rows per page with numbered navigation, debounce note search, reset pages on filter changes, and discard stale list responses. After create, edit, or delete, reload the list and move back one page if a deletion empties the current page.
+- Dashboard: request only the three newest transactions for the selected month.
+- Verification: cover combined filters, malformed queries, page boundaries, ordering, tenant isolation, and UI navigation and mutations. Run client tests and build; run server tests with a disposable `TEST_DATABASE_URL`.
+- Release: update the README and workspace package versions to `1.2.0` with the feature.
+- Status: implementation and documentation are updated; client tests and production build pass. Server integration tests require a disposable `TEST_DATABASE_URL` and remain to be run.

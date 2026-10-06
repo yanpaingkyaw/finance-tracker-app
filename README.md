@@ -1,10 +1,11 @@
-# Mini Finance Tracker v1
+# Mini Finance Tracker v1.2
 
 A localhost-first full-stack app for:
 - Multi-user finance tracking with JWT auth
 - Category-based monthly budgeting
 - Automatic carryover pool from unused previous-month budgets
 - Budget health dashboard and monthly summary reports
+- Paginated transactions with month, type, category, and note filters
 
 ## Tech Stack
 
@@ -102,7 +103,9 @@ To require successful checks before release:
 - Categories:
   - `GET/POST/PATCH/DELETE /api/categories`
 - Transactions:
-  - `GET/POST/PATCH/DELETE /api/transactions`
+  - `GET /api/transactions?yearMonth=YYYY-MM&type=EXPENSE&categoryId=...&note=...&page=1&pageSize=20`
+  - `POST /api/transactions`, `PATCH/DELETE /api/transactions/:id`
+  - All list filters are optional. `page` defaults to 1; `pageSize` defaults to 20 and is capped at 100. The response contains `transactions` and `pagination` (`page`, `pageSize`, `total`, `totalPages`).
 - Budgets:
   - `GET /api/budgets/:yearMonth`
   - `PUT /api/budgets/:yearMonth/items`

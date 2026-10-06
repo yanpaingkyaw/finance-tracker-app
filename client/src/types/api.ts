@@ -24,6 +24,12 @@ export interface CategoriesResponse {
 
 export interface TransactionsResponse {
   transactions: TransactionDto[];
+  pagination: {
+    page: number;
+    pageSize: number;
+    total: number;
+    totalPages: number;
+  };
 }
 
 export interface BudgetResponse {

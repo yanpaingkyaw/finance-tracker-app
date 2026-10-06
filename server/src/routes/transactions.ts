@@ -31,6 +31,11 @@ const patchSchema = z.object({
 const listQuerySchema = z.object({
   query: z.object({
     yearMonth: z.string().optional(),
+    type: z.enum(["INCOME", "EXPENSE"]).optional(),
+    categoryId: z.string().min(1).optional(),
+    note: z.string().trim().max(200).optional(),
+    page: z.string().regex(/^[1-9]\d*$/).transform(Number).pipe(z.number().int().max(1_000_000)).default("1"),
+    pageSize: z.string().regex(/^[1-9]\d*$/).transform(Number).pipe(z.number().int().max(100)).default("20"),
   }),
 });
 
@@ -45,13 +50,22 @@ router.get(
       assertYearMonth(parsedQuery.yearMonth);
     }
 
-    const transactions = await prisma.transaction.findMany({
-      where: buildTransactionFilter(req.user!.id, parsedQuery.yearMonth),
-      include: {
-        category: true,
-      },
-      orderBy: [{ date: "desc" }, { createdAt: "desc" }],
-    });
+    const where = {
+      ...buildTransactionFilter(req.user!.id, parsedQuery.yearMonth),
+      ...(parsedQuery.type ? { type: parsedQuery.type } : {}),
+      ...(parsedQuery.categoryId ? { categoryId: parsedQuery.categoryId } : {}),
+      ...(parsedQuery.note ? { note: { contains: parsedQuery.note, mode: "insensitive" as const } } : {}),
+    };
+    const [total, transactions] = await Promise.all([
+      prisma.transaction.count({ where }),
+      prisma.transaction.findMany({
+        where,
+        include: { category: true },
+        orderBy: [{ date: "desc" }, { createdAt: "desc" }, { id: "desc" }],
+        skip: (parsedQuery.page - 1) * parsedQuery.pageSize,
+        take: parsedQuery.pageSize,
+      }),
+    ]);
 
     res.json({
       transactions: transactions.map((tx) => ({
@@ -64,6 +78,12 @@ router.get(
         categoryName: tx.category.name,
         createdAt: tx.createdAt.toISOString(),
       })),
+      pagination: {
+        page: parsedQuery.page,
+        pageSize: parsedQuery.pageSize,
+        total,
+        totalPages: Math.ceil(total / parsedQuery.pageSize),
+      },
     });
   }),
 );

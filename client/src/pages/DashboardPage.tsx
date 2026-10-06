@@ -46,7 +46,7 @@ export function DashboardPage() {
         const [budgetRes, reportRes, transactionRes] = await Promise.all([
           getBudget(token, yearMonth),
           getMonthlyReport(token, yearMonth, yearMonth),
-          getTransactions(token, yearMonth),
+          getTransactions(token, { yearMonth, page: 1, pageSize: 3 }),
         ]);
         if (!cancelled) {
           setBudget(budgetRes.budget);
