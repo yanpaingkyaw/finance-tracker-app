@@ -75,9 +75,21 @@ npm run test -w server
 - Project root: repository root
 - Build command: `npm run build`
 - Output directory: `client/dist`
-- API routes: `/api/*` through `api/[...path].ts`
+- API routes: `/api/*` through `api/index.js`
 - Required env vars: `DATABASE_URL`, `DIRECT_URL`, `JWT_SECRET`, `CORS_ORIGIN`
 - Optional env var: `VITE_API_URL` only when frontend and API are split
+
+## CI/CD
+
+GitHub Actions runs the **Build and test** check on pull requests and pushes to `main`. It installs dependencies from the lockfile, builds all workspaces, then runs client and server tests against a disposable PostgreSQL service. The CI database is separate from the Vercel database and needs no GitHub secret.
+
+Vercel's Git integration deploys each pull request as a preview and pushes to the production branch as production. Keep the Vercel project connected to this repository with the project root set to the repository root. Do not add a second deployment workflow or Vercel token when using this integration.
+
+To require successful checks before release:
+
+1. In GitHub, protect `main` with a ruleset or branch protection rule that requires pull requests and the **Build and test** status check. Require the branch to be up to date before merging if you want CI to test the latest `main` changes together with the pull request.
+2. In Vercel's production environment settings, add **Build and test** as a Deployment Check if available for the project. This prevents a direct push to `main` from being promoted before CI passes. Without this setting, Vercel can deploy a push before GitHub Actions finishes.
+3. Keep `DATABASE_URL`, `DIRECT_URL`, `JWT_SECRET`, and `CORS_ORIGIN` in Vercel environment variables for the appropriate Preview and Production environments. Apply database migrations separately before code that needs a new schema is released; the CI migration runs only against its temporary database.
 
 ## API Endpoints
 
